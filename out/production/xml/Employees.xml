@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<employees>
+    <employee>
+        <firstName>George</firstName>
+        <lastName>Washington</lastName>
+        <age>56</age>
+        <position>president</position>
+        <employer>
+            <name>US nation</name>
+            <startDate>1945-11-12</startDate>
+            <endDate>1954-11-10</endDate>
+        </employer>
+        <address>
+            <street>washington str.</street>
+            <streetNo>2</streetNo>
+            <section>12</section>
+            <city>Washington DC</city>
+        </address>
+    </employee>
+    <employee>
+        <firstName>Bill</firstName>
+        <lastName>Gates</lastName>
+        <age>60</age>
+        <position>SEO</position>
+        <employer>
+            <name>Microsoft</name>
+            <startDate>1990-12-12</startDate>
+            <endDate>2016-4-5</endDate>
+        </employer>
+        <address>
+            <street>benn str.</street>
+            <streetNo>1</streetNo>
+            <section>8</section>
+            <city>Miami</city>
+        </address>
+    </employee>
+</employees>
