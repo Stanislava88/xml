@@ -14,7 +14,7 @@ import java.util.List;
  * @author Krasimir Raikov(raikov.krasimir@gmail.com)
  */
 public class SaxHandler<T> extends DefaultHandler {
-    List<T> elements = new ArrayList<>();
+    private List<T> elements = new ArrayList<>();
     private Class clazz = elements.getClass();
     private Object parent = null;
     private Object child = null;
@@ -22,6 +22,10 @@ public class SaxHandler<T> extends DefaultHandler {
 
     public SaxHandler(Class clazz) {
         this.clazz = clazz;
+    }
+
+    public List<T> getElements() {
+        return elements;
     }
 
     @Override

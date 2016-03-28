@@ -42,7 +42,7 @@ public class SaxHandlerTest {
         SaxHandler handler = new SaxHandler<Employee>(Employee.class);
         parser.parse(ClassLoader.getSystemResourceAsStream("Employees.xml"), handler);
 
-        assertThat(handler.elements, is(equalTo(expectedElements)));
+        assertThat(handler.getElements(), is(equalTo(expectedElements)));
     }
 
 }
