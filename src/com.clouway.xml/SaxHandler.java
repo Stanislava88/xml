@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class SaxHandler<T> extends DefaultHandler {
     private List<T> elements = new ArrayList<>();
-    private Class clazz = elements.getClass();
+    private final Class clazz;
     private Object parent = null;
     private Object child = null;
     private String field = null;
