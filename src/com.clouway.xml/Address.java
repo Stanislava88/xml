@@ -4,18 +4,44 @@ package com.clouway.xml;
  * @author Krasimir Raikov(raikov.krasimir@gmail.com)
  */
 public class Address {
-    private String street;
-    private int streetNo;
+
+    public static final class Builder {
+        private String street;
+        private Integer streetNo;
+
+        private Builder() {
+        }
+
+        public Builder street(String val) {
+            street = val;
+            return this;
+        }
+
+        public Builder streetNo(Integer val) {
+            streetNo = val;
+            return this;
+        }
+
+        public Address build() {
+            return new Address(this);
+        }
+    }
+
+    public static Builder aNewAddress() {
+        return new Builder();
+    }
+
+    private final String street;
+    private final Integer streetNo;
 
     public Address() {
+        street = null;
+        streetNo = null;
     }
 
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    public void setStreetNo(int streetNo) {
-        this.streetNo = streetNo;
+    private Address(Builder builder) {
+        street = builder.street;
+        streetNo = builder.streetNo;
     }
 
     @Override
@@ -25,23 +51,15 @@ public class Address {
 
         Address address = (Address) o;
 
-        if (streetNo != address.streetNo) return false;
-        return !(street != null ? !street.equals(address.street) : address.street != null);
+        if (street != null ? !street.equals(address.street) : address.street != null) return false;
+        return !(streetNo != null ? !streetNo.equals(address.streetNo) : address.streetNo != null);
 
     }
 
     @Override
     public int hashCode() {
         int result = street != null ? street.hashCode() : 0;
-        result = 31 * result + streetNo;
+        result = 31 * result + (streetNo != null ? streetNo.hashCode() : 0);
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return "Address{" +
-                "street='" + street + '\'' +
-                ", streetNo=" + streetNo +
-                '}';
     }
 }

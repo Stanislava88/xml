@@ -7,6 +7,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -17,8 +18,7 @@ public class SaxHandler<T> extends DefaultHandler {
     private Class clazz = elements.getClass();
     private Object parent = null;
     private Object child = null;
-    private String primitiveField = null;
-
+    private String field = null;
 
     public SaxHandler(Class clazz) {
         this.clazz = clazz;
@@ -28,15 +28,18 @@ public class SaxHandler<T> extends DefaultHandler {
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
         try {
             if (qName.equalsIgnoreCase(clazz.getSimpleName())) {
+
                 parent = clazz.newInstance();
+
             } else {
-                Field[] fields = getCurrentDeclaredFields();
+                Field[] fields = child == null ? clazz.getDeclaredFields() : child.getClass().getDeclaredFields();
                 for (Field field : fields) {
                     field.setAccessible(true);
                     if (qName.equalsIgnoreCase(field.getName())) {
-                        if (field.getType().isPrimitive() || field.getType().equals(String.class)) {
-                            primitiveField = field.getName();
-                        } else{
+                        if (field.getType().isPrimitive() || field.getType().equals(String.class) || field.getType().equals(Integer.class) || field.getType().equals(Date.class)) {
+                            this.field = field.getName();
+
+                        } else {
                             child = Class.forName(field.getType().getName()).newInstance();
                         }
                     }
@@ -84,17 +87,17 @@ public class SaxHandler<T> extends DefaultHandler {
     @Override
     public void characters(char[] ch, int start, int length) throws SAXException {
         try {
-            if (primitiveField != null) {
-                if (child==null) {
-                    Field field = parent.getClass().getDeclaredField(primitiveField);
+            if (field != null) {
+                if (child == null) {
+                    Field field = parent.getClass().getDeclaredField(this.field);
                     field.setAccessible(true);
                     putInField(parent, new String(ch, start, length), field);
-                    primitiveField = null;
-                }else{
-                    Field field = child.getClass().getDeclaredField(primitiveField);
+                    this.field = null;
+                } else {
+                    Field field = child.getClass().getDeclaredField(this.field);
                     field.setAccessible(true);
                     putInField(child, new String(ch, start, length), field);
-                    primitiveField = null;
+                    this.field = null;
                 }
             }
         } catch (NoSuchFieldException e) {
@@ -106,18 +109,12 @@ public class SaxHandler<T> extends DefaultHandler {
     }
 
     private void putInField(Object object, String value, Field field) throws IllegalAccessException {
-        if (field.getType().equals(String.class)){
+        if (field.getType().equals(String.class)) {
             field.set(object, value);
-        }else if (field.getType().getName().contains("int")){
-            field.setInt(object, new Integer(value));
-        }
-    }
-
-    public Field[] getCurrentDeclaredFields() {
-        if(child!=null){
-            return child.getClass().getDeclaredFields();
-        }else{
-            return clazz.getDeclaredFields();
+        } else if (field.getType().getName().contains("Integer")) {
+            field.set(object, new Integer(value));
+        } else if (field.getType().getName().contains("Date")) {
+            field.set(object, java.sql.Date.valueOf(value));
         }
     }
 }
