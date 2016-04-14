@@ -12,9 +12,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.clouway.xml.Address.aNewAddress;
 import static com.clouway.xml.Employee.aNewEmployee;
-import static com.clouway.xml.Employer.aNewEmployer;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
@@ -24,25 +22,25 @@ import static org.hamcrest.core.IsEqual.equalTo;
  */
 public class SaxHandlerTest {
 
-    @Test
-    public void happyPath() throws ParserConfigurationException, SAXException, IOException {
-        List<Employee> expectedElements = new ArrayList<>();
-        Address addressOne = aNewAddress().street("washington str.").streetNo(2).build();
-        Employer employer = aNewEmployer().name("US nation").startDate(Date.valueOf("1945-11-12")).endDate(Date.valueOf("1954-11-10")).build();
-        Employee employeeOne = aNewEmployee().firstName("George").age(56).address(addressOne).employer(employer).build();
-        expectedElements.add(employeeOne);
+  @Test
+  public void happyPath() throws ParserConfigurationException, SAXException, IOException {
+    List<Employee> expectedElements = new ArrayList<>();
+    Address addressOne = new Address("washington str.", 2);
+    Employer employer = new Employer("US nation", Date.valueOf("1945-11-12"), Date.valueOf("1954-11-10"));
+    Employee employeeOne = aNewEmployee().firstName("George").age(56).address(addressOne).employer(employer).build();
+    expectedElements.add(employeeOne);
 
-        Address addressTwo = aNewAddress().street("benn str.").streetNo(1).build();
-        Employer employerTwo = aNewEmployer().name("Microsoft").startDate(Date.valueOf("1990-12-12")).endDate(Date.valueOf("2016-4-5")).build();
-        Employee employeeTwo = aNewEmployee().firstName("Bill").age(60).address(addressTwo).employer(employerTwo).build();
-        expectedElements.add(employeeTwo);
+    Address addressTwo = new Address("benn str.", 1);
+    Employer employerTwo = new Employer("Microsoft", Date.valueOf("1990-12-12"), Date.valueOf("2016-4-5"));
+    Employee employeeTwo = aNewEmployee().firstName("Bill").age(60).address(addressTwo).employer(employerTwo).build();
+    expectedElements.add(employeeTwo);
 
-        SAXParserFactory parserFactory = SAXParserFactory.newInstance();
-        SAXParser parser = parserFactory.newSAXParser();
-        SaxHandler handler = new SaxHandler<Employee>(Employee.class);
-        parser.parse(ClassLoader.getSystemResourceAsStream("Employees.xml"), handler);
+    SAXParserFactory parserFactory = SAXParserFactory.newInstance();
+    SAXParser parser = parserFactory.newSAXParser();
+    SaxHandler handler = new SaxHandler<Employee>(Employee.class);
+    parser.parse(ClassLoader.getSystemResourceAsStream("Employees.xml"), handler);
 
-        assertThat(handler.getElements(), is(equalTo(expectedElements)));
-    }
+    assertThat(handler.getElements(), is(equalTo(expectedElements)));
+  }
 
 }

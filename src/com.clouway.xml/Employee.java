@@ -5,83 +5,83 @@ package com.clouway.xml;
  */
 public class Employee {
 
-    public static final class Builder {
-        private String firstName;
-        private Integer age;
-        private Address address;
-        private Employer employer;
+  private final String firstName;
+  private final Integer age;
+  private final Address address;
+  private final Employer employer;
 
-        private Builder() {
-        }
+  public Employee() {
+    firstName = null;
+    age = null;
+    address = null;
+    employer = null;
+  }
 
-        public Builder firstName(String val) {
-            firstName = val;
-            return this;
-        }
+  private Employee(Builder builder) {
+    firstName = builder.firstName;
+    age = builder.age;
+    address = builder.address;
+    employer = builder.employer;
+  }
 
-        public Builder age(Integer val) {
-            age = val;
-            return this;
-        }
+  public static Builder aNewEmployee() {
+    return new Builder();
+  }
 
-        public Builder address(Address val) {
-            address = val;
-            return this;
-        }
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
 
-        public Builder employer(Employer val) {
-            employer = val;
-            return this;
-        }
+    Employee employee = (Employee) o;
 
-        public Employee build() {
-            return new Employee(this);
-        }
+    if (firstName != null ? !firstName.equals(employee.firstName) : employee.firstName != null) return false;
+    if (age != null ? !age.equals(employee.age) : employee.age != null) return false;
+    if (address != null ? !address.equals(employee.address) : employee.address != null) return false;
+    return !(employer != null ? !employer.equals(employee.employer) : employee.employer != null);
+
+  }
+
+  @Override
+  public int hashCode() {
+    int result = firstName != null ? firstName.hashCode() : 0;
+    result = 31 * result + (age != null ? age.hashCode() : 0);
+    result = 31 * result + (address != null ? address.hashCode() : 0);
+    result = 31 * result + (employer != null ? employer.hashCode() : 0);
+    return result;
+  }
+
+  public static final class Builder {
+    private String firstName;
+    private Integer age;
+    private Address address;
+    private Employer employer;
+
+    private Builder() {
     }
 
-    public static Builder aNewEmployee() {
-        return new Builder();
+    public Builder firstName(String val) {
+      firstName = val;
+      return this;
     }
 
-    private final String firstName;
-    private final Integer age;
-    private final Address address;
-    private final Employer employer;
-
-    public Employee() {
-        firstName = null;
-        age = null;
-        address = null;
-        employer = null;
+    public Builder age(Integer val) {
+      age = val;
+      return this;
     }
 
-    private Employee(Builder builder) {
-        firstName = builder.firstName;
-        age = builder.age;
-        address = builder.address;
-        employer = builder.employer;
+    public Builder address(Address val) {
+      address = val;
+      return this;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Employee employee = (Employee) o;
-
-        if (firstName != null ? !firstName.equals(employee.firstName) : employee.firstName != null) return false;
-        if (age != null ? !age.equals(employee.age) : employee.age != null) return false;
-        if (address != null ? !address.equals(employee.address) : employee.address != null) return false;
-        return !(employer != null ? !employer.equals(employee.employer) : employee.employer != null);
-
+    public Builder employer(Employer val) {
+      employer = val;
+      return this;
     }
 
-    @Override
-    public int hashCode() {
-        int result = firstName != null ? firstName.hashCode() : 0;
-        result = 31 * result + (age != null ? age.hashCode() : 0);
-        result = 31 * result + (address != null ? address.hashCode() : 0);
-        result = 31 * result + (employer != null ? employer.hashCode() : 0);
-        return result;
+    public Employee build() {
+      return new Employee(this);
     }
+  }
 }
