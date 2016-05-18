@@ -1,0 +1,70 @@
+<?version ="1.0" encoding="utf-8" ?>
+<employees>
+
+    <Employee>
+      <firstName>Lilia</firstName>
+      <lastName>Angelova</lastName>
+      <age>23</age>
+      <position>accountant</position>
+
+      <Employer>
+        <name>Penny</name>
+        <startDate>12-12-2010</startDate>
+        <endDate>25-12-2030</endDate>
+      </Employer>
+      <addresses>
+        <address>
+          <street>Veliki Preslav</street>
+          <streetNumber>22</streetNumber>
+          <section>B</section>
+          <city>Sofia</city>
+        </address>
+        <address>
+          <street>Veliki Preslav</street>
+          <streetNumber>22</streetNumber>
+          <section>B</section>
+          <city>Sofia</city>
+        </address>
+        <Address>
+          <street>Veliki Preslav</street>
+          <streetNumber>22</streetNumber>
+          <section>B</section>
+          <city>Sofia</city>
+        </Address>
+      </addresses>
+
+    </Employee>
+    <Employee>
+      <firstName>Lilia</firstName>
+      <lastName>Angelova</lastName>
+      <age>23</age>
+      <position>accountant</position>
+
+      <Employer>
+        <name>Penny</name>
+        <startDate>12-12-2010</startDate>
+        <endDate>25-12-2030</endDate>
+      </Employer>
+      <addresses>
+        <address>
+          <street>Veliki Preslav</street>
+          <streetNumber>22</streetNumber>
+          <section>B</section>
+          <city>Sofia</city>
+        </address>
+        <address>
+          <street>Veliki Preslav</street>
+          <streetNumber>22</streetNumber>
+          <section>B</section>
+          <city>Sofia</city>
+        </address>
+        <Address>
+          <street>Veliki Preslav</street>
+          <streetNumber>22</streetNumber>
+          <section>B</section>
+          <city>Sofia</city>
+        </Address>
+      </addresses>
+    </Employee>
+
+</employees>
